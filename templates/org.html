@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block title %} Leaderboard for {{ org }} {% endblock %}
+
+{% block content %}
+	<table class="ui inverted table segment">
+		<thead>
+		<tr> 
+			<td>Student</td> 
+			<td>Tasks</td> 
+		</tr>
+		</thead>
+		{% for tup in leaderboard %}
+			<tr> 
+				<td>{{ tup[0] }}</td> 
+				<td>{{ tup[1] }}</td> 
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
