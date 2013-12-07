@@ -46,10 +46,11 @@ def leaderboard(org):
 	sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1], reverse=True)
 
 	total = sum([int(tup[1]) for tup in final_dict.iteritems()])
-
+	total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
 	return render_template("org.html", leaderboard=sorted_dict, 
 							org=orgname, 
-							total=total)
+							total=total,
+							students=total_students)
 
 @app.route('/all/')
 def allorgs():
@@ -70,10 +71,12 @@ def allorgs():
 
 	sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1], reverse=True)
 	total = sum([int(tup[1]) for tup in final_dict.iteritems()])
+	total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
 	return render_template("org.html", leaderboard=sorted_dict, 
 							org="All Organizations", 
-							total=total)
+							total=total,
+							students=total_students)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run(host="0.0.0.0")
