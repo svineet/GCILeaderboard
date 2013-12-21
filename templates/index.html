@@ -1,100 +1,100 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>
-	{% block title %}
-		Leaderboard for Google Code In
-	{% endblock %}
-	</title>
+    <meta charset="UTF-8">
+    <title>
+    {% block title %}
+        Leaderboard for Google Code In
+    {% endblock %}
+    </title>
 
-	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.9.3/css/semantic.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.9.3/css/semantic.min.css">
 
-	<style>
-	header{width:50%;margin:0 auto;}
-	*{
-		font-family: 'Source Sans Pro', Verdana, sans-serif;
-		font-weight: 300;
-	}
-	</style>
+    <style>
+    header{width:50%;margin:0 auto;}
+    *{
+        font-family: 'Source Sans Pro', Verdana, sans-serif;
+        font-weight: 300;
+    }
+    </style>
 </head>
 <body>
-	<a href="https://github.com/svineet/GCILeaderboard"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <a href="https://github.com/svineet/GCILeaderboard"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
-	<header>
-		<h1 class="ui header">
-			<i class="code icon"></i>
-			<a class="content">
-				GCI Leaderboard
-				<div class="sub header">(Unofficial)</div>
-			</a>
-		</h1>
-	</header>
+    <header>
+        <h1 class="ui header">
+            <i class="code icon"></i>
+            <a class="content">
+                GCI Leaderboard
+                <div class="sub header">(Unofficial)</div>
+            </a>
+        </h1>
+    </header>
 
-	<br>
+    <br>
 
-	<div class="ui page grid">
-		<div class="column">
-			<div class="ui two item labeled icon inverted menu">
-				<a class="item" href="{{ url_for('index') }}">
-					<i class="home icon"></i>
-					Home
-				</a>
-				<a class="item" href="{{ url_for('about') }}">
-					<i class="user icon"></i>
-					About
-				</a>
-			</div>
+    <div class="ui page grid">
+        <div class="column">
+            <div class="ui two item labeled icon inverted menu">
+                <a class="item" href="{{ url_for('index') }}">
+                    <i class="home icon"></i>
+                    Home
+                </a>
+                <a class="item" href="{{ url_for('about') }}">
+                    <i class="user icon"></i>
+                    About
+                </a>
+            </div>
 
-			<div class="ui fluid eleven item inverted menu">
-				<a href="{{ url_for('allorgs') }}" class="item">
-					All
-				</a>
-				<a href="{{ url_for('leaderboard', org='sugarlabs2013') }}" class="item">
-					Sugar Labs
-				</a>
-				<a href="{{ url_for('leaderboard', org='sahana') }}" class="item">
-					Sahana Eden
-				</a>
-				<a href="{{ url_for('leaderboard', org='apertium') }}" class="item">
-				
-					Apertium
-				</a>
-				<a href="{{ url_for('leaderboard', org='brlcad') }}" class="item">
-					BRL-CAD
-				</a>
-				<a href="{{ url_for('leaderboard', org='copyleftgames') }}" class="item">
-					Copyleft Games
-				</a>
-				<a href="{{ url_for('leaderboard', org='rtems') }}" class="item">
-					RTEMS
-				</a>
-				<a href="{{ url_for('leaderboard', org='wikimedia') }}" class="item">
-					Wikimedia
-				</a>
-				<a href="{{ url_for('leaderboard', org='kde') }}" class="item">
-					KDE
-				</a>
-				<a href="{{ url_for('leaderboard', org='haiku') }}" class="item">
-					Haiku
-				</a>
-				<a href="{{ url_for('leaderboard', org='drupal') }}" class="item">
-					Drupal
-				</a>
-			</div>
+            <div class="ui fluid eleven item inverted menu">
+                <a href="{{ url_for('allorgs') }}" class="item">
+                    All
+                </a>
+                <a href="{{ url_for('leaderboard', org='sugarlabs2013') }}" class="item">
+                    Sugar Labs
+                </a>
+                <a href="{{ url_for('leaderboard', org='sahana') }}" class="item">
+                    Sahana Eden
+                </a>
+                <a href="{{ url_for('leaderboard', org='apertium') }}" class="item">
 
-			{% block content %}
+                    Apertium
+                </a>
+                <a href="{{ url_for('leaderboard', org='brlcad') }}" class="item">
+                    BRL-CAD
+                </a>
+                <a href="{{ url_for('leaderboard', org='copyleftgames') }}" class="item">
+                    Copyleft Games
+                </a>
+                <a href="{{ url_for('leaderboard', org='rtems') }}" class="item">
+                    RTEMS
+                </a>
+                <a href="{{ url_for('leaderboard', org='wikimedia') }}" class="item">
+                    Wikimedia
+                </a>
+                <a href="{{ url_for('leaderboard', org='kde') }}" class="item">
+                    KDE
+                </a>
+                <a href="{{ url_for('leaderboard', org='haiku') }}" class="item">
+                    Haiku
+                </a>
+                <a href="{{ url_for('leaderboard', org='drupal') }}" class="item">
+                    Drupal
+                </a>
+            </div>
 
-				<h2>Hi!</h2>
-				This website is a per organization leaderboard for Google Code In 2013. Click on your organization above.
-				<br>
-				Enjoy! <i class="smile icon"></i>
+            {% block content %}
 
-			{% endblock %}
+                <h2>Hi!</h2>
+                This website is a per organization leaderboard for Google Code In 2013. Click on your organization above.
+                <br>
+                Enjoy! <i class="smile icon"></i>
 
-		</div>
-	</div>
+            {% endblock %}
+
+        </div>
+    </div>
 
 </body>
 </html>

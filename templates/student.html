@@ -3,26 +3,42 @@
 {% block title %} Profile of {{ name }} {% endblock %}
 
 {% block content %}
-
-	<h1>Tasks Completed</h1>
-	<table class="ui inverted table segment">
-		<thead>
-		<tr> 
-			<td>Title</td> 
-			<td>Type</td>  
-			<td>Org.</td>
-		</tr>
-		</thead>
-		{% for task in tasks %}
-			<tr> 
-				<td><a href="{{ task[1] }}">{{ task[0] }}</a></td> 
-				<td>{{ task[2] }}</td>
-				<td>{{ task[3] }}</td> 
-			</tr>
-		{% endfor %}
-	</table>
-	<h1>Stats</h1>
-	<ul>
-		<li> {{ name }} has done {{ total }} tasks. </li>
-	</ul>
+    <style>
+        td a {
+          color: #E7E7E7;
+        }
+        td a:link {
+          text-decoration:none;
+        }
+        td a:visited {
+          text-decoration:none;
+        }
+        td a:active {
+          text-decoration:none;
+        }
+        td a:hover {
+          text-decoration:underline;
+        }
+    </style>
+    <h1>Tasks Completed</h1>
+    <table class="ui inverted table segment">
+        <thead>
+        <tr>
+            <td>Title</td>
+            <td>Type</td>
+            <td>Org.</td>
+        </tr>
+        </thead>
+        {% for task in tasks %}
+            <tr>
+                <td><a href="{{ task[1] }}">{{ task[0] }}</a></td>
+                <td>{{ task[2] }}</td>
+                <td>{{ task[3] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h1>Stats</h1>
+    <ul>
+        <li> {{ name }} has done {{ total }} tasks. </li>
+    </ul>
 {% endblock %}

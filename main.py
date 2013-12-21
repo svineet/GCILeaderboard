@@ -1,20 +1,21 @@
-from pprint import pprint
 import requests
 from flask import *
 app = Flask(__name__)
 
-BASEURL = "http://www.google-melange.com/gci/org/google/gci2013/{orgname}?fmt=json&limit=500&idx=1"
+BASEURL = "http://www.google-melange.com/gci/org/google/gci2013/" \
+    "{orgname}?fmt=json&limit=500&idx=1"
 
 orglist = ['sugarlabs2013',
-		'sahana',
-		'apertium',
-		'brlcad',
-		'copyleftgames',
-		'rtems',
-		'wikimedia',
-		'kde',
-		'haiku',
-		'drupal']
+        'sahana',
+        'apertium',
+        'brlcad',
+        'copyleftgames',
+        'rtems',
+        'wikimedia',
+        'kde',
+        'haiku',
+        'drupal']
+
 
 @app.route('/')
 def index():
@@ -24,103 +25,98 @@ def index():
 @app.route('/about/')
 def about():
     return render_template('about.html')
-    
-#@app.route('/student_fast/<name>-count=<e>-org=<org>')
-#def student_fast(name, e, org):
-#	print((int(e), org))
-#	student(name, int(e), org)
-    
+
+
 @app.route('/student/<name>-count=<int:e>-org=<org>')
 def student(name, e=0, org=None):
-	tasks = []
-	total = 0
-	
-	ol = orglist
-	if org and u'All' not in org:
-		ol = [org] + ol
-	
-	for org in ol:
-		page_url = BASEURL.format(orgname=org)
-		page = requests.get(page_url)
-		page_json = page.json()
+    tasks = []
+    total = 0
 
-		data = page_json['data']['']
-		for row in data:
-			student_name = row['columns']['student']
-			if student_name == name:
-				total += 1
-				student_name = row['columns']['student']
-				title = row['columns']['title']
-				link = "http://www.google-melange.com" + \
-					row['operations']['row']['link']
-				type_ = row['columns']['types']
-				tasks.append((title, link, type_, org))
-				print((title, link, type_, org))
-				print(total, e)
-			if total == e and e:
-				print('OK')
-				return render_template("student.html",
-						tasks=tasks, 
-						total=total,
-						name=name)
-				
-		
-	#tasks.sort(key=lambda x: (x[0], x[2], x[3], x[0]))
-	return render_template("student.html", tasks=tasks, 
-						total=total,
-						name=name)
+    ol = orglist
+    if org and u'All' not in org:
+        ol = [org] + ol
+
+    for org in ol:
+        page_url = BASEURL.format(orgname=org)
+        page = requests.get(page_url)
+        page_json = page.json()
+
+        data = page_json['data']['']
+        for row in data:
+            student_name = row['columns']['student']
+            if student_name == name:
+                total += 1
+                student_name = row['columns']['student']
+                title = row['columns']['title']
+                link = "http://www.google-melange.com" + \
+                    row['operations']['row']['link']
+                type_ = row['columns']['types']
+                tasks.append((title, link, type_, org))
+            if total == e and e:
+                return render_template("student.html",
+                        tasks=tasks,
+                        total=total,
+                        name=name)
+
+    #tasks.sort(key=lambda x: (x[0], x[2], x[3], x[0]))
+    return render_template("student.html", tasks=tasks,
+                        total=total,
+                        name=name)
 
 
 @app.route('/org/<org>/')
 def leaderboard(org):
-	orgname = org
-	page_url = BASEURL.format(orgname=orgname)
-	page = requests.get(page_url)
-	page_json = page.json()
+    orgname = org
+    page_url = BASEURL.format(orgname=orgname)
+    page = requests.get(page_url)
+    page_json = page.json()
 
-	final_dict = {}
+    final_dict = {}
 
-	data = page_json['data']['']
-	for row in data:
-		student_name = row['columns']['student']
-		if student_name in final_dict:
-			final_dict[student_name] += 1
-		else:
-			final_dict[student_name] = 1
+    data = page_json['data']['']
+    for row in data:
+        student_name = row['columns']['student']
+        if student_name in final_dict:
+            final_dict[student_name] += 1
+        else:
+            final_dict[student_name] = 1
 
-	sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1], reverse=True)
+    sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
+        reverse=True)
 
-	total = sum([int(tup[1]) for tup in final_dict.iteritems()])
-	total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
-	return render_template("org.html", leaderboard=sorted_dict, 
-							org=orgname, 
-							total=total,
-							students=total_students)
+    total = sum([int(tup[1]) for tup in final_dict.iteritems()])
+    total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
+    return render_template("org.html", leaderboard=sorted_dict,
+                            org=orgname,
+                            total=total,
+                            students=total_students)
+
 
 @app.route('/all/')
 def allorgs():
-	final_dict = {}
+    final_dict = {}
 
-	for org in orglist:
-		page_url = BASEURL.format(orgname=org)
-		page = requests.get(page_url)
-		page_json = page.json()
+    for org in orglist:
+        page_url = BASEURL.format(orgname=org)
+        page = requests.get(page_url)
+        page_json = page.json()
 
-		data = page_json['data']['']
-		for row in data:
-			student_name = row['columns']['student']
-			if student_name in final_dict:
-				final_dict[student_name] += 1
-			else:
-				final_dict[student_name] = 1
+        data = page_json['data']['']
+        for row in data:
+            student_name = row['columns']['student']
+            if student_name in final_dict:
+                final_dict[student_name] += 1
+            else:
+                final_dict[student_name] = 1
 
-	sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1], reverse=True)
-	total = sum([int(tup[1]) for tup in final_dict.iteritems()])
-	total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
-	return render_template("org.html", leaderboard=sorted_dict, 
-							org="All Organizations", 
-							total=total,
-							students=total_students)
+    sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
+        reverse=True)
+    total = sum([int(tup[1]) for tup in final_dict.iteritems()])
+    total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
+    return render_template("org.html", leaderboard=sorted_dict,
+                            org="All Organizations",
+                            total=total,
+                            students=total_students)
 
 
 if __name__ == '__main__':
