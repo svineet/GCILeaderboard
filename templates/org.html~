@@ -12,7 +12,7 @@
 		</thead>
 		{% for tup in leaderboard %}
 			<tr> 
-				<td><a href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }}</a></td> 
+				<td><a href="{{ url_for('student_fast', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }}</a></td> 
 				<td>{{ tup[1] }}</td> 
 			</tr>
 		{% endfor %}

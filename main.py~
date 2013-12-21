@@ -36,7 +36,7 @@ def student(name, e=0, org=None):
 	total = 0
 	
 	ol = orglist
-	if org and u'All' not in org:
+	if org and u'all' not in org:
 		ol = [org] + ol
 	
 	for org in ol:
