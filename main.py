@@ -52,6 +52,7 @@ def student(name, e=0, org=None):
                     row['operations']['row']['link']
                 type_ = row['columns']['types']
                 tasks.append((title, link, type_, org))
+            tasks.sort()
             if total == e and e:
                 return render_template("student.html",
                         tasks=tasks,
