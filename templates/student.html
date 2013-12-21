@@ -3,24 +3,16 @@
 {% block title %} Profile of {{ name }} {% endblock %}
 
 {% block content %}
-    <style>
-        td a {
-          color: #E7E7E7;
-        }
-        td a:link {
-          text-decoration:none;
-        }
-        td a:visited {
-          text-decoration:none;
-        }
-        td a:active {
-          text-decoration:none;
-        }
-        td a:hover {
-          text-decoration:underline;
-        }
-    </style>
     <h1>Tasks Completed by {{ name }} </h1>
+    <div data-role="collapsible">
+        <h3>{{ name }} has done {{ total }} tasks. </h3>
+        <ul data-role="listview" data-inset="true" data-theme="d">
+        <li> {{ name }} has done {{ interface }} user interface tasks. </li>
+        <li> {{ name }} has done {{ code }} code tasks. </li>
+        <li> {{ name }} has done {{ quality }} quality assurance tasks. </li>
+        <li> {{ name }} has done {{ documentation }} documentation tasks. </li>
+        </ul>
+    </div>
     <table class="ui inverted table segment">
         <thead>
         <tr>
@@ -37,8 +29,4 @@
             </tr>
         {% endfor %}
     </table>
-    <h1>Stats</h1>
-    <ul>
-        <li> {{ name }} has done {{ total }} tasks. </li>
-    </ul>
 {% endblock %}

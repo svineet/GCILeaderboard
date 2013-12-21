@@ -30,6 +30,10 @@ def about():
 @app.route('/student/<name>-count=<int:e>-org=<org>')
 def student(name, e=0, org=None):
     tasks = []
+    code = 0
+    interface = 0
+    quality = 0
+    doc = 0
     total = 0
 
     ol = orglist
@@ -52,11 +56,25 @@ def student(name, e=0, org=None):
                     row['operations']['row']['link']
                 type_ = row['columns']['types']
                 tasks.append((title, link, type_, org))
+
+                if type_ == "User Interface" or type_.startswith("User Interface"):
+                     interface += 1
+                elif type_ == "Code" or type_.startswith("Code"):
+                     code += 1
+                elif type_ == "Quality Assurance" or type_.startswith("Quality Assurance"):
+                     quality += 1
+                elif "Documentation" in type_:
+                     doc += 1
+
             tasks.sort()
             if total == e and e:
                 return render_template("student.html",
                         tasks=tasks,
                         total=total,
+                        interface=interface,
+                        code=code,
+                        documentation=doc,
+                        quality=quality,
                         name=name)
 
     #tasks.sort(key=lambda x: (x[0], x[2], x[3], x[0]))
