@@ -1,42 +1,13 @@
 {% extends "index.html" %}
-
-{% block title %} Leaderboard for {{ org }} {% endblock %}
-
 {% block content %}
-    <style>
-        td a {
-          color: #E7E7E7;
-        }
-        td a:link {
-          text-decoration:none;
-        }
-        td a:visited {
-          text-decoration:none;
-        }
-        td a:active {
-          text-decoration:none;
-        }
-        td a:hover {
-          text-decoration:underline;
-        }
-    </style>
-    <table class="ui inverted table segment">
-        <thead>
-        <tr>
-            <td>Student</td>
-            <td>Tasks</td>
-        </tr>
-        </thead>
-        {% for tup in leaderboard %}
-            <tr>
-                <td><a href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }}</a></td>
-                <td>{{ tup[1] }}</td>
-            </tr>
-        {% endfor %}
-        <tr>
-            <td>Total Students : {{ students }}*</td>
-            <td>Total: {{ total }}</td>
-        </tr>
-    </table>
-    <small>* : Only those who have done atleast one task</small>
+<h1>Leaderboard for {{ org }}</h1>
+<div>
+<div data-role="collapsible" data-mini="true" data-content-theme="b" data-theme="b" data-collapsed-icon="carat-r" data-expanded-icon="carat-d">
+<h3>{{ students }} students in {{org }} has finished {{ total }} tasks.</h3>
+<ul data-role="listview" data-inset="true" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+{% for tup in leaderboard %}
+        <li><a href="{{ url_for('student', name=tup[0], e=tup[1], org=org) }}">{{ tup[0] }} has finished {{ tup[1] }} tasks in {{ org }}</a></li>
+{% endfor %}
+</ul>
+</div>
 {% endblock %}

@@ -1,4 +1,5 @@
 import requests
+import sys
 from flask import *
 app = Flask(__name__)
 
@@ -135,8 +136,8 @@ def allorgs():
     return render_template("org.html", leaderboard=sorted_dict,
                             org="All Organizations",
                             total=total,
-                            students=total_students)
+                            students=total_studentszz)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0", port=int(sys.argv[1]))
