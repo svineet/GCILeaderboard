@@ -136,7 +136,7 @@ def allorgs():
     return render_template("org.html", leaderboard=sorted_dict,
                             org="All Organizations",
                             total=total,
-                            students=total_studentszz)
+                            students=total_students)
 
 
 if __name__ == '__main__':
