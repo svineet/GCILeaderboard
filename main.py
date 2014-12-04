@@ -1,20 +1,24 @@
 import requests
+import os
+from datetime import datetime
 from flask import *
 app = Flask(__name__)
 
-BASEURL = "http://www.google-melange.com/gci/org/google/gci2013/" \
+BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=500&idx=1"
 
-orglist = ['sugarlabs2013',
-        'sahana',
-        'apertium',
-        'brlcad',
-        'copyleftgames',
-        'rtems',
-        'wikimedia',
-        'kde',
-        'haiku',
-        'drupal']
+orglist = ['sugarlabs',
+           'mifos',
+           'apertium',
+           'brlcad',
+           'sahana',
+           'copyleftgames',
+           'openmrs',
+           'wikimedia',
+           'kde',
+           'haiku',
+           'drupal',
+           'fossasia']
 
 
 @app.route('/')
@@ -39,7 +43,7 @@ def student(name, e=0, org=None):
     for org in ol:
         page_url = BASEURL.format(orgname=org)
         page = requests.get(page_url)
-        page_json = page.json()
+        page_json = page.json
 
         data = page_json['data']['']
         for row in data:
@@ -55,14 +59,13 @@ def student(name, e=0, org=None):
             tasks.sort()
             if total == e and e:
                 return render_template("student.html",
-                        tasks=tasks,
-                        total=total,
-                        name=name)
-
-    #tasks.sort(key=lambda x: (x[0], x[2], x[3], x[0]))
+                                       tasks=tasks,
+                                       total=total,
+                                       name=name)
+    # tasks.sort(key=lambda x: (x[0], x[2], x[3], x[0]))
     return render_template("student.html", tasks=tasks,
-                        total=total,
-                        name=name)
+                           total=total,
+                           name=name)
 
 
 @app.route('/org/<org>/')
@@ -70,7 +73,15 @@ def leaderboard(org):
     orgname = org
     page_url = BASEURL.format(orgname=orgname)
     page = requests.get(page_url)
-    page_json = page.json()
+    page_json = page.json
+    actually = open("templates/access.html")
+    actual_text = actually.read()
+    actually.close()
+    new_text = str(datetime.now()) + "<--> Access to: %s<br>" % org
+    try:
+        os.system("echo '" + new_text + "' >> templates/access.html")
+    except:
+        pass
 
     final_dict = {}
 
@@ -83,14 +94,14 @@ def leaderboard(org):
             final_dict[student_name] = 1
 
     sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
-        reverse=True)
+                         reverse=True)
 
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
     return render_template("org.html", leaderboard=sorted_dict,
-                            org=orgname,
-                            total=total,
-                            students=total_students)
+                           org=orgname,
+                           total=total,
+                           students=total_students)
 
 
 @app.route('/all/')
@@ -100,7 +111,7 @@ def allorgs():
     for org in orglist:
         page_url = BASEURL.format(orgname=org)
         page = requests.get(page_url)
-        page_json = page.json()
+        page_json = page.json
 
         data = page_json['data']['']
         for row in data:
@@ -111,13 +122,13 @@ def allorgs():
                 final_dict[student_name] = 1
 
     sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
-        reverse=True)
+                         reverse=True)
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
     return render_template("org.html", leaderboard=sorted_dict,
-                            org="All Organizations",
-                            total=total,
-                            students=total_students)
+                           org="All Organizations",
+                           total=total,
+                           students=total_students)
 
 
 if __name__ == '__main__':
