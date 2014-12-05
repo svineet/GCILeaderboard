@@ -74,15 +74,6 @@ def leaderboard(org):
     page_url = BASEURL.format(orgname=orgname)
     page = requests.get(page_url)
     page_json = page.json
-    actually = open("templates/access.html")
-    actual_text = actually.read()
-    actually.close()
-    new_text = str(datetime.now()) + "<--> Access to: %s<br>" % org
-    try:
-        os.system("echo '" + new_text + "' >> templates/access.html")
-    except:
-        pass
-
     final_dict = {}
 
     data = page_json['data']['']
