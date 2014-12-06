@@ -3,19 +3,21 @@ import sys
 from flask import *
 app = Flask(__name__)
 
-BASEURL = "http://www.google-melange.com/gci/org/google/gci2013/" \
+BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=500&idx=1"
 
-orglist = ['sugarlabs2013',
-        'sahana',
-        'apertium',
-        'brlcad',
-        'copyleftgames',
-        'rtems',
-        'wikimedia',
-        'kde',
-        'haiku',
-        'drupal']
+orglist = ['sugarlabs',
+           'mifos',
+           'apertium',
+           'brlcad',
+           'sahana',
+           'copyleftgames',
+           'openmrs',
+           'wikimedia',
+           'kde',
+           'haiku',
+           'drupal',
+           'fossasia']
 
 
 @app.route('/')
@@ -43,8 +45,9 @@ def student(name, e=0, org=None):
 
     for org in ol:
         page_url = BASEURL.format(orgname=org)
+
         page = requests.get(page_url)
-        page_json = page.json()
+        page_json = page.json
 
         data = page_json['data']['']
         for row in data:
@@ -89,7 +92,7 @@ def leaderboard(org):
     orgname = org
     page_url = BASEURL.format(orgname=orgname)
     page = requests.get(page_url)
-    page_json = page.json()
+    page_json = page.json
 
     final_dict = {}
 
@@ -119,7 +122,7 @@ def allorgs():
     for org in orglist:
         page_url = BASEURL.format(orgname=org)
         page = requests.get(page_url)
-        page_json = page.json()
+        page_json = page.json
 
         data = page_json['data']['']
         for row in data:

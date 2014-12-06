@@ -104,28 +104,31 @@
 <body>
     <div data-role="header" data-position="fixed">
         <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-            <a class="ui-btn" href="http://elsalvador.treehouse.su:5001/about">About</a>
+            <a class="ui-btn" href="http://kuckuck.treehouse.su:5002/about">About</a>
             <a class="ui-btn" href="{{ url_for('allorgs') }}" class="item">All</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='sugarlabs2013') }}" class="item">Sugar Labs</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='sugarlabs') }}" class="item">Sugar Labs</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='sahana') }}" class="item">Sahana Eden</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='apertium') }}" class="item">Apertium</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='brlcad') }}" class="item">BRL-CAD</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='copyleftgames') }}" class="item">Copyleft Games</a>
-            <a class="ui-btn" href="{{ url_for('leaderboard', org='rtems') }}" class="item">RTEMS</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='openmrs') }}" class="item">OpenMRS</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='wikimedia') }}" class="item">Wikimedia</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='kde') }}" class="item">KDE</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='haiku') }}" class="item">Haiku</a>
             <a class="ui-btn" href="{{ url_for('leaderboard', org='drupal') }}" class="item">Drupal</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='mifos') }}" class="item">Mifos</a>
+            <a class="ui-btn" href="{{ url_for('leaderboard', org='fossasia') }}" class="item">FOSS Asia</a>
 
         </div>
     </div>
     <div id='content'>
     {% block content %}
         <h1>Hi!</h1>
-        This website is a per organization leaderboard for Google Code In 2013. Click on your organization above.
+        This website is a per organization leaderboard for Google Code In 2014. Click on your organization above.
         <br>
         Enjoy! <i class="smile icon"></i>
     {% endblock %}
     </div>
 </body>
 </html>
+
