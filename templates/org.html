@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Leaderboard for {{ org }}</h1>
 <div>
-<div data-role="collapsible" data-mini="true" data-content-theme="b" data-theme="b" data-collapsed-icon="carat-r" data-expanded-icon="carat-d">
+<div data-role="collapsible" data-mini="true" data-content-theme="b" data-theme="b" data-collapsed-icon="carat-r" data-expanded-icon="carat-d" data-collapsed="false">
 <h3>{{ students }} students in {{org }} has finished {{ total }} tasks.</h3>
 <ul data-role="listview" data-inset="true" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
 {% for tup in leaderboard %}
