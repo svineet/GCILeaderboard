@@ -1,12 +1,13 @@
 import requests
 import sys
-import gobject
 from flask import *
 app = Flask(__name__)
-all_page_json = ""
+import os
 
-global time_for_update
-time_for_update = True
+try:
+    os.mkdir("orgs")
+except:
+    pass
 
 BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=500&idx=1"
@@ -23,37 +24,6 @@ orglist = ['sugarlabs',
            'haiku',
            'drupal',
            'fossasia']
-
-all_json = {'sugarlabs': '',
-            'mifos': '',
-            'apertium': '',
-            'brlcad': '',
-            'sahana': '',
-            'copyleftgames': '',
-            'openmrs': '',
-            'wikimedia': '',
-            'kde': '',
-            'haiku': '',
-            'drupal': '',
-            'fossasia': ''}
-
-
-def update_orgs():
-    for org in orglist:
-        page_url = BASEURL.format(orgname=org)
-        page = requests.get(page_url)
-        all_json[org] = page.json()
-
-    print "Updated."
-
-
-def time_update():
-    update_orgs()
-    return True
-
-time_update()
-# Update every 5 minutes
-gobject.timeout_add(10000, time_update)
 
 
 @app.route('/')
@@ -81,7 +51,9 @@ def student(name, e=0, org=None):
         ol = [org] + ol
 
     for org in ol:
-        page_json = all_json[org]
+        page_json_f = open("orgs/%s.json" % org, "r")
+        page_json = json.loads(page_json_f.read())
+        page_json_f.close()
 
         data = page_json['data']['']
         for row in data:
@@ -127,7 +99,9 @@ def student(name, e=0, org=None):
 
 @app.route('/org/<org>/')
 def leaderboard(org):
-    page_json = all_json[org]
+    page_json_f = open("orgs/%s.json" % org, "r")
+    page_json = json.loads(page_json_f.read())
+    page_json_f.close()
 
     final_dict = {}
 
@@ -156,7 +130,9 @@ def allorgs(draw=True):
 
     current = 0
     for org in orglist:
-        page_json = all_json[org]
+        page_json_f = open("orgs/%s.json" % org, "r")
+        page_json = json.loads(page_json_f.read())
+        page_json_f.close()
 
         data = page_json['data']['']
         for row in data:
