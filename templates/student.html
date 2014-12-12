@@ -12,7 +12,7 @@
         <li> {{ name }} has done {{ documentation }} documentation tasks. </li>
         <li> {{ name }} has done {{ research}} outreach/research tasks. </li>
         </ul>
-    <div data-role="collapsible" data-mini="true" data-content-theme="b" data-theme="b" data-collapsed-icon="carat-r" data-expanded-icon="carat-d">
+    <div data-role="collapsible" data-mini="true" data-content-theme="b" data-theme="b" data-collapsed-icon="carat-r" data-expanded-icon="carat-d" data-collapsed="false">
         <h3> List of tasks </h3>
         {% for task in tasks %}
         <li><a href="{{ task[1] }}">{{ task[0] }}</a></li>
