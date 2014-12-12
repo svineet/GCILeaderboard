@@ -26,16 +26,17 @@ orglist = ['sugarlabs',
 
 all_json = {'sugarlabs': '',
             'mifos': '',
-            'apertium':'',
-            'brlcad':'',
-            'sahana':'',
-            'copyleftgames':'',
-            'openmrs':'',
-            'wikimedia':'',
-            'kde':'',
-            'haiku':'',
-            'drupal':'',
-            'fossasia':''}
+            'apertium': '',
+            'brlcad': '',
+            'sahana': '',
+            'copyleftgames': '',
+            'openmrs': '',
+            'wikimedia': '',
+            'kde': '',
+            'haiku': '',
+            'drupal': '',
+            'fossasia': ''}
+
 
 def update_orgs():
     for org in orglist:
@@ -45,6 +46,7 @@ def update_orgs():
 
     print "Updated."
 
+
 def time_update():
     update_orgs()
     return True
@@ -52,6 +54,7 @@ def time_update():
 time_update()
 # Update every 5 minutes
 gobject.timeout_add(5000, time_update)
+
 
 @app.route('/')
 def index():
@@ -92,33 +95,34 @@ def student(name, e=0, org=None):
                 type_ = row['columns']['types']
                 tasks.append((title, link, type_, org))
 
-                if type_ == "User Interface" or type_.startswith("User Interface"):
-                     interface += 1
+                if type_ == "User Interface" or type_.startswith(
+                        "User Interface"):
+                    interface += 1
                 elif type_ == "Code" or type_.startswith("Code"):
-                     code += 1
+                    code += 1
                 elif type_ == "Quality Assurance" or type_.startswith("Quality Assurance"):
-                     quality += 1
+                    quality += 1
                 elif "Documentation" in type_:
-                     doc += 1
+                    doc += 1
                 elif "Research" in type_:
-                     research += 1
+                    research += 1
 
             tasks.sort()
             if total == e and e:
                 return render_template("student.html",
-                        tasks=tasks,
-                        total=total,
-                        interface=interface,
-                        code=code,
-                        documentation=doc,
-                        quality=quality,
-                        research=research,
-                        name=name)
+                                       tasks=tasks,
+                                       total=total,
+                                       interface=interface,
+                                       code=code,
+                                       documentation=doc,
+                                       quality=quality,
+                                       research=research,
+                                       name=name)
 
     #tasks.sort(key=lambda x: (x[0], x[2], x[3], x[0]))
     return render_template("student.html", tasks=tasks,
-                        total=total,
-                        name=name)
+                           total=total,
+                           name=name)
 
 
 @app.route('/org/<org>/')
@@ -136,14 +140,14 @@ def leaderboard(org):
             final_dict[student_name] = 1
 
     sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
-        reverse=True)
+                         reverse=True)
 
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
     return render_template("org.html", leaderboard=sorted_dict,
-                            org=org,
-                            total=total,
-                            students=total_students)
+                           org=org,
+                           total=total,
+                           students=total_students)
 
 
 @app.route('/all/')
@@ -164,13 +168,13 @@ def allorgs(draw=True):
         current += 1
 
     sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
-        reverse=True)
+                         reverse=True)
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
     return render_template("org.html", leaderboard=sorted_dict,
-                            org="All Organizations",
-                            total=total,
-                            students=total_students)
+                           org="All Organizations",
+                           total=total,
+                           students=total_students)
 
 
 if __name__ == '__main__':
