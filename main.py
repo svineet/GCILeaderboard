@@ -1,7 +1,12 @@
 import requests
 import sys
+import gobject
 from flask import *
 app = Flask(__name__)
+all_page_json = ""
+
+global time_for_update
+time_for_update = True
 
 BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
     "{orgname}?fmt=json&limit=500&idx=1"
@@ -19,6 +24,34 @@ orglist = ['sugarlabs',
            'drupal',
            'fossasia']
 
+all_json = {'sugarlabs': '',
+            'mifos': '',
+            'apertium':'',
+            'brlcad':'',
+            'sahana':'',
+            'copyleftgames':'',
+            'openmrs':'',
+            'wikimedia':'',
+            'kde':'',
+            'haiku':'',
+            'drupal':'',
+            'fossasia':''}
+
+def update_orgs():
+    for org in orglist:
+        page_url = BASEURL.format(orgname=org)
+        page = requests.get(page_url)
+        all_json[org] = page.json()
+
+    print "Updated."
+
+def time_update():
+    update_orgs()
+    return True
+
+time_update()
+# Update every 5 minutes
+gobject.timeout_add(5000, time_update)
 
 @app.route('/')
 def index():
@@ -37,6 +70,7 @@ def student(name, e=0, org=None):
     interface = 0
     quality = 0
     doc = 0
+    research = 0
     total = 0
 
     ol = orglist
@@ -44,10 +78,7 @@ def student(name, e=0, org=None):
         ol = [org] + ol
 
     for org in ol:
-        page_url = BASEURL.format(orgname=org)
-
-        page = requests.get(page_url)
-        page_json = page.json
+        page_json = all_json[org]
 
         data = page_json['data']['']
         for row in data:
@@ -69,6 +100,8 @@ def student(name, e=0, org=None):
                      quality += 1
                 elif "Documentation" in type_:
                      doc += 1
+                elif "Research" in type_:
+                     research += 1
 
             tasks.sort()
             if total == e and e:
@@ -79,6 +112,7 @@ def student(name, e=0, org=None):
                         code=code,
                         documentation=doc,
                         quality=quality,
+                        research=research,
                         name=name)
 
     #tasks.sort(key=lambda x: (x[0], x[2], x[3], x[0]))
@@ -89,10 +123,7 @@ def student(name, e=0, org=None):
 
 @app.route('/org/<org>/')
 def leaderboard(org):
-    orgname = org
-    page_url = BASEURL.format(orgname=orgname)
-    page = requests.get(page_url)
-    page_json = page.json
+    page_json = all_json[org]
 
     final_dict = {}
 
@@ -110,19 +141,18 @@ def leaderboard(org):
     total = sum([int(tup[1]) for tup in final_dict.iteritems()])
     total_students = len(set([tup[0] for tup in final_dict.iteritems()]))
     return render_template("org.html", leaderboard=sorted_dict,
-                            org=orgname,
+                            org=org,
                             total=total,
                             students=total_students)
 
 
 @app.route('/all/')
-def allorgs():
+def allorgs(draw=True):
     final_dict = {}
 
+    current = 0
     for org in orglist:
-        page_url = BASEURL.format(orgname=org)
-        page = requests.get(page_url)
-        page_json = page.json
+        page_json = all_json[org]
 
         data = page_json['data']['']
         for row in data:
@@ -131,6 +161,7 @@ def allorgs():
                 final_dict[student_name] += 1
             else:
                 final_dict[student_name] = 1
+        current += 1
 
     sorted_dict = sorted(final_dict.iteritems(), key=lambda x: x[1],
         reverse=True)
