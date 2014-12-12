@@ -53,7 +53,7 @@ def time_update():
 
 time_update()
 # Update every 5 minutes
-gobject.timeout_add(5000, time_update)
+gobject.timeout_add(10000, time_update)
 
 
 @app.route('/')
