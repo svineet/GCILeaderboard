@@ -21,7 +21,9 @@ BASEURL = "http://www.google-melange.com/gci/org/google/gci2014/" \
 
 
 def update_orgs():
+    print "Update started"
     for org in orglist:
+        print org
         page_url = BASEURL.format(orgname=org)
         page = requests.get(page_url)
         data = page.json()

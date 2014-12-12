@@ -26,6 +26,11 @@ orglist = ['sugarlabs',
            'fossasia']
 
 
+@app.route('/update')
+def update():
+    os.system("python update.py &")
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
