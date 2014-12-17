@@ -1,7 +1,5 @@
 import requests
 import json
-import gobject
-from threading import Thread
 
 orglist = ['sugarlabs',
            'mifos',
